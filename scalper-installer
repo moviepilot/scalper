@@ -7,8 +7,7 @@ then
   exit 1
 fi
 
-gem install pp
-gem install json
+gem install --no-rdoc --no-ri json
 
 curl http://github.com/moviepilot/scalper/raw/master/scalper > $EXE
 chmod 755 $EXE
