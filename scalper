@@ -9,8 +9,8 @@ require 'rubygems'
 require 'json'
 require 'pp'
 
-#CURRENT_RECIPE=`ls -1 /root/scalarium-agent/log/chef/*.json | tail -n 1`.strip
-CURRENT_RECIPE="/tmp/foo.json"
+CURRENT_RECIPE=`ls -1 /root/scalarium-agent/log/chef/*.json | tail -n 1`.strip
+#CURRENT_RECIPE="/tmp/foo.json"
 TMP_RECIPE_PATH="/tmp"
 TMP_UPDATE_RECIPES_PATH="/tmp/site-cookbooks"
 CHEF_EXECUTABLE="/root/scalarium-agent/bin/chef-solo -c /root/scalarium-agent/config/solo.rb -j" 
