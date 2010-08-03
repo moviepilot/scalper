@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
-if !system("which $(basename #{__FILE__}) 2>/dev/null >/dev/null")
-  puts "$(basename #{__FILE__}) is not in your PATH available ... add it with:\n\texport PATH=$PATH:#{`readlink -f $(dirname #{__FILE__})`}\n"
+EXE=`basename #{__FILE__}`
+if !system("which #{EXE} 2>/dev/null >/dev/null")
+  puts "#{EXE} is not in your PATH available ... add it with:\n\texport PATH=$PATH:#{`readlink -f $(dirname #{__FILE__})`}\n"
   exit 1
 end
 
@@ -21,7 +22,7 @@ if ARGV.size == 0 || ARGV[0] == "help"
 
 
 
-Usage: #{ARGV[0]} command
+Usage: #{EXE} command
   
   commands:
     rc              show current configuration
