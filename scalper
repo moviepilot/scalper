@@ -30,7 +30,7 @@ Usage: #{EXE} command
   commands:
     sc              show current configuration
     rl              list the chef recipes of the current config
-    uc              update custom cookbooks
+    uc              update custom cookbooks (only public git repos are supported)
     exec            execute all recipes of the current role
     exec <recipes>  only execute the specified recipes (separate by comma without blanks)  
 
