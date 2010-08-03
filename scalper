@@ -59,12 +59,6 @@ elsif ARGV[0] == "uc"
     puts "only git repositories are supported at the moment"
     exit 3
   end
-  if  config_data["scalarium_custom_cookbooks"]["scm"]["ssh_key"] ||
-      config_data["scalarium_custom_cookbooks"]["scm"]["username"] ||
-      config_data["scalarium_custom_cookbooks"]["scm"]["password"]
-    puts "only public repos are supported at the moment"
-    exit 4
-  end
 
   system("mkdir -p #{TMP_UPDATE_RECIPES_PATH}; cd #{TMP_UPDATE_RECIPES_PATH}; git clone --depth 1 #{custom_cookbooks_url}; mv #{SITE_COOKBOOKS_DIR} #{SITE_COOKBOOKS_DIR}.bak_$(date +\"%F_%T\"); rm -rf *.git/.git; rm *.git/*; mv *.git #{SITE_COOKBOOKS_DIR}; rm -rf #{TMP_UPDATE_RECIPES_PATH}")
 
