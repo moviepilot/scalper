@@ -1,6 +1,16 @@
 #!/bin/bash
+EXE=/usr/bin/scalper
+
 if [ "$(whoami)" != "root" ]
 then
   echo "This installer has to be executed as root"
   exit 1
 fi
+
+gem install pp
+gem install json
+
+curl http://github.com/moviepilot/scalper/raw/master/scalper > $EXE
+chmod 755 $EXE
+
+$EXE help
