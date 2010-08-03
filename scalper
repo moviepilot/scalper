@@ -10,7 +10,7 @@ require 'json'
 require 'pp'
 
 CONTEXT_DIR="/root/scalarium-agent/log/chef/"
-CONTEXT_DIR="/tmp"
+#CONTEXT_DIR="/tmp"
 
 CURRENT_CONTEXT=`ls -1 #{CONTEXT_DIR}/*.json | tail -n 1`.strip
 CURRENT_LOG=`ls -1 /root/scalarium-agent/log/chef/*.log 2>/dev/null | tail -n 1`.strip
