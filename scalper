@@ -49,7 +49,7 @@ elsif ARGV[0] == "rl"
   puts "custom recipes:"
   puts 
   puts "\t#{config_data["scalarium_custom_cookbooks"]["recipes"] ? config_data["scalarium_custom_cookbooks"]["recipes"].join("\n\t") : "\tnone"}"
-elsif ARGV[0] == "ur"
+elsif ARGV[0] == "uc"
   custom_cookbooks_url = config_data["scalarium_custom_cookbooks"]["scm"]["repository"]
   if !custom_cookbooks_url
     puts "the current configuration does not seem to have custom recipes"
