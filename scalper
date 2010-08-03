@@ -22,9 +22,9 @@ config_data = JSON.load(File.read(CURRENT_RECIPE))
 
 
 
-if ARGV[0] == "sc"
+if ARGV[0] == "show"
   pp config_data
-elsif ARGV[0] == "rl"
+elsif ARGV[0] == "list"
   puts "recipes:"
   puts 
   puts "\t#{config_data["recipes"].join("\n\t")}"
@@ -33,7 +33,7 @@ elsif ARGV[0] == "rl"
   puts "custom recipes:"
   puts 
   puts "\t#{config_data["scalarium_custom_cookbooks"]["recipes"] ? config_data["scalarium_custom_cookbooks"]["recipes"].join("\n\t") : "\tnone"}"
-elsif ARGV[0] == "uc"
+elsif ARGV[0] == "update"
   custom_cookbooks_url = config_data["scalarium_custom_cookbooks"]["scm"]["repository"]
   if !custom_cookbooks_url
     puts "the current configuration does not seem to have custom recipes"
@@ -86,10 +86,10 @@ else
 Usage: #{EXE} command
   
   commands:
-    sc              show current configuration
-    rl              list the chef recipes of the current config
-    uc              update custom cookbooks (only public git repos are supported)
-    tail            tail current log
+    show            show current configuration
+    list            list the chef recipes of the current config
+    update          update custom cookbooks (only public git repos are supported)
+    tail            tail current log (uses "less")
     exec            execute all recipes of the current role
     exec <recipes>  only execute the specified recipes (separate by comma without blanks)  
 
