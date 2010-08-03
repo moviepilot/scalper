@@ -12,7 +12,8 @@ require 'pp'
 CONTEXT_DIR="/root/scalarium-agent/log/chef/"
 #CONTEXT_DIR="/tmp"
 
-CURRENT_CONTEXT=`ls -1 #{CONTEXT_DIR}/*.json | tail -n 1`.strip
+USED_CONTEXT_FILE="#{CONTEXT_DIR}/.scalper_context"
+CURRENT_CONTEXT=File.exists?(USED_CONTEXT_FILE) ? File.read(USED_CONTEXT_FILE) : `ls -1 #{CONTEXT_DIR}/*.json | tail -n 1`.strip
 CURRENT_LOG=`ls -1 /root/scalarium-agent/log/chef/*.log 2>/dev/null | tail -n 1`.strip
 TMP_CONTEXT_PATH="/tmp"
 TMP_UPDATE_CONTEXTS_PATH="/tmp/scalper-tmp-site-cookbooks"
@@ -81,12 +82,36 @@ elsif ARGV[0] == "exec"
     puts "\n\n\n\n\n************************************** finished executing command:\n\t#{command}\n\n"
   end
 elsif ARGV[0] == "context"
-  contexts = []
-  Dir.glob("#{CONTEXT_DIR}/*.json").each do |file|
-    contexts << JSON.load(File.read(file))["scalarium"]["activity"]
+  if ARGV.length == 1
+    contexts = []
+    Dir.glob("#{CONTEXT_DIR}/*.json").each do |file|
+      contexts << JSON.load(File.read(file))["scalarium"]["activity"]
+    end
+    puts "The following contexts are available:"
+    puts "\t#{contexts.uniq.join("\n\t")}"
+    puts
+    puts "current context is: #{config_data["scalarium"]["activity"]} (file: #{CURRENT_CONTEXT})"
+    puts
+  else
+    Dir.glob("#{CONTEXT_DIR}/*.json").reverse.each do |file|
+      if JSON.load(File.read(file))["scalarium"]["activity"] == ARGV[1]
+        f = File.open(USED_CONTEXT_FILE, "w")
+        f << file
+        f.close
+        puts 
+        puts "context set to \"#{ARGV[1]}\" (file: #{file})"
+        puts
+        exit 0
+      end
+
+    end
+
+    puts
+    puts "could not find any config with context \"#{ARGV[1]}\""
+    puts
+
+    exit 1
   end
-  puts "The following contexts are available:"
-  puts "\t#{contexts.uniq.join("\n\t")}"
 else 
   puts <<EOF
 
