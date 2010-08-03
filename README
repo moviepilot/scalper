@@ -1,0 +1,3 @@
+install with:
+
+    bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)
