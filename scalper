@@ -9,9 +9,12 @@ require 'rubygems'
 require 'json'
 require 'pp'
 
-CURRENT_RECIPE=`ls -1 /root/scalarium-agent/log/chef/*.json | tail -n 1`.strip
+#CURRENT_RECIPE=`ls -1 /root/scalarium-agent/log/chef/*.json | tail -n 1`.strip
+CURRENT_RECIPE="/tmp/foo.json"
 TMP_RECIPE_PATH="/tmp"
+TMP_UPDATE_RECIPES_PATH="/tmp/site-cookbooks"
 CHEF_EXECUTABLE="/root/scalarium-agent/bin/chef-solo -c /root/scalarium-agent/config/solo.rb -j" 
+SITE_COOKBOOKS_DIR="/root/scalarium-agent/site-cookbooks"
 
 config_data = JSON.load(File.read(CURRENT_RECIPE))
 
@@ -27,6 +30,7 @@ Usage: #{EXE} command
   commands:
     sc              show current configuration
     rl              list the chef recipes of the current config
+    uc              update custom cookbooks
     exec            execute all recipes of the current role
     exec <recipes>  only execute the specified recipes (separate by comma without blanks)  
 
@@ -45,6 +49,24 @@ elsif ARGV[0] == "rl"
   puts "custom recipes:"
   puts 
   puts "\t#{config_data["scalarium_custom_cookbooks"]["recipes"] ? config_data["scalarium_custom_cookbooks"]["recipes"].join("\n\t") : "\tnone"}"
+elsif ARGV[0] == "ur"
+  custom_cookbooks_url = config_data["scalarium_custom_cookbooks"]["scm"]["repository"]
+  if !custom_cookbooks_url
+    puts "the current configuration does not seem to have custom recipes"
+    exit 2
+  end
+  if config_data["scalarium_custom_cookbooks"]["scm"]["type"] != "git"
+    puts "only git repositories are supported at the moment"
+    exit 3
+  end
+  if  config_data["scalarium_custom_cookbooks"]["scm"]["ssh_key"].empty? ||
+      config_data["scalarium_custom_cookbooks"]["scm"]["username"].empty? ||
+      config_data["scalarium_custom_cookbooks"]["scm"]["password"].empty?
+    puts "only public repos are supported at the moment"
+    exit 4
+  end
+
+  system("mkdir -p #{TMP_UPDATE_RECIPES_PATH}; cd #{TMP_UPDATE_RECIPES_PATH}; git clone --bare #{custom_cookbooks_url}; mv #{SITE_COOKBOOKS_DIR} #{SITE_COOKBOOKS_DIR}.bak; mv *.git #{SITE_COOKBOOKS_DIR}; rm -rf #{TMP_UPDATE_RECIPES_PATH}")
 
 elsif ARGV[0] == "exec"
   if ARGV.size == 1
