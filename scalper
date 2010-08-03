@@ -47,7 +47,7 @@ elsif ARGV[0] == "update"
   system("mkdir -p #{TMP_UPDATE_RECIPES_PATH}; cd #{TMP_UPDATE_RECIPES_PATH}; git clone --depth 1 #{custom_cookbooks_url}; mv #{SITE_COOKBOOKS_DIR} #{SITE_COOKBOOKS_DIR}.bak_$(date +\"%F_%T\") 2>/dev/null; rm -rf */.git; rm */* 2>/dev/null; mv * #{SITE_COOKBOOKS_DIR}; rm -rf #{TMP_UPDATE_RECIPES_PATH}")
 
 elsif ARGV[0] == "tail"
-  system("less #{CURRENT_LOG}")
+  system("less +F #{CURRENT_LOG}")
 elsif ARGV[0] == "exec"
   if ARGV.size == 1
     command = "#{CHEF_EXECUTABLE} #{CURRENT_RECIPE}"
