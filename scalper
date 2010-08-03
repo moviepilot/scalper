@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-if !system("which ch 2>/dev/null >/dev/null")
-  puts "ch is not in your PATH available ... add it with:\n\texport PATH=$PATH:#{`readlink -f $(dirname #{__FILE__})`}\n"
+if !system("which $(basename #{__FILE__}) 2>/dev/null >/dev/null")
+  puts "$(basename #{__FILE__}) is not in your PATH available ... add it with:\n\texport PATH=$PATH:#{`readlink -f $(dirname #{__FILE__})`}\n"
   exit 1
 end
 
