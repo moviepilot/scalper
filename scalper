@@ -66,7 +66,7 @@ elsif ARGV[0] == "uc"
     exit 4
   end
 
-  system("mkdir -p #{TMP_UPDATE_RECIPES_PATH}; cd #{TMP_UPDATE_RECIPES_PATH}; git clone --bare #{custom_cookbooks_url}; mv #{SITE_COOKBOOKS_DIR} #{SITE_COOKBOOKS_DIR}.bak; mv *.git #{SITE_COOKBOOKS_DIR}; rm -rf #{TMP_UPDATE_RECIPES_PATH}")
+  system("mkdir -p #{TMP_UPDATE_RECIPES_PATH}; cd #{TMP_UPDATE_RECIPES_PATH}; git clone --depth 1 #{custom_cookbooks_url}; mv #{SITE_COOKBOOKS_DIR} #{SITE_COOKBOOKS_DIR}.bak_$(date +"%F_%T"); rm -rf *.git/.git; rm *.git/*; mv *.git #{SITE_COOKBOOKS_DIR}; rm -rf #{TMP_UPDATE_RECIPES_PATH}")
 
 elsif ARGV[0] == "exec"
   if ARGV.size == 1
