@@ -9,17 +9,17 @@ require 'rubygems'
 require 'json'
 require 'pp'
 
-CURRENT_RECIPE=`ls -1 /root/scalarium-agent/log/chef/*.json | tail -n 1`.strip
-CURRENT_LOG=`ls -1 /root/scalarium-agent/log/chef/*.log | tail -n 1`.strip
-#CURRENT_RECIPE="/tmp/foo.json"
-TMP_RECIPE_PATH="/tmp"
-TMP_UPDATE_RECIPES_PATH="/tmp/scalper-tmp-site-cookbooks"
+CONTEXT_DIR="/root/scalarium-agent/log/chef/"
+CONTEXT_DIR="/tmp"
+
+CURRENT_CONTEXT=`ls -1 #{CONTEXT_DIR}/*.json | tail -n 1`.strip
+CURRENT_LOG=`ls -1 /root/scalarium-agent/log/chef/*.log 2>/dev/null | tail -n 1`.strip
+TMP_CONTEXT_PATH="/tmp"
+TMP_UPDATE_CONTEXTS_PATH="/tmp/scalper-tmp-site-cookbooks"
 CHEF_EXECUTABLE="/root/scalarium-agent/bin/chef-solo -c /root/scalarium-agent/config/solo.rb -j" 
 SITE_COOKBOOKS_DIR="/root/scalarium-agent/site-cookbooks"
 
-config_data = JSON.load(File.read(CURRENT_RECIPE))
-
-
+config_data = JSON.load(File.read(CURRENT_CONTEXT))
 
 
 if ARGV[0] == "show"
@@ -44,13 +44,13 @@ elsif ARGV[0] == "update"
     exit 3
   end
 
-  system("mkdir -p #{TMP_UPDATE_RECIPES_PATH}; cd #{TMP_UPDATE_RECIPES_PATH}; git clone --depth 1 #{custom_cookbooks_url}; mv #{SITE_COOKBOOKS_DIR} #{SITE_COOKBOOKS_DIR}.bak_$(date +\"%F_%T\") 2>/dev/null; rm -rf */.git; rm */* 2>/dev/null; mv * #{SITE_COOKBOOKS_DIR}; rm -rf #{TMP_UPDATE_RECIPES_PATH}")
+  system("mkdir -p #{TMP_UPDATE_CONTEXTS_PATH}; cd #{TMP_UPDATE_CONTEXTS_PATH}; git clone --depth 1 #{custom_cookbooks_url}; mv #{SITE_COOKBOOKS_DIR} #{SITE_COOKBOOKS_DIR}.bak_$(date +\"%F_%T\") 2>/dev/null; rm -rf */.git; rm */* 2>/dev/null; mv * #{SITE_COOKBOOKS_DIR}; rm -rf #{TMP_UPDATE_CONTEXTS_PATH}")
 
 elsif ARGV[0] == "tail"
   system("less +F #{CURRENT_LOG}")
 elsif ARGV[0] == "exec"
   if ARGV.size == 1
-    command = "#{CHEF_EXECUTABLE} #{CURRENT_RECIPE}"
+    command = "#{CHEF_EXECUTABLE} #{CURRENT_CONTEXT}"
 
     puts "executing current chef config:"
     puts "\t#{command}\n\n"
@@ -59,7 +59,7 @@ elsif ARGV[0] == "exec"
     puts "\n\n\n\n\n************************************** finished executing command:\n\t#{command}\n\n"
   else
     recipes = ARGV[1].split(",")
-    tmp_recipe = "#{TMP_RECIPE_PATH}/chef_config__#{ARGV[1].gsub("::", "-").gsub(",", "__")}.json"
+    tmp_recipe = "#{TMP_CONTEXT_PATH}/chef_config__#{ARGV[1].gsub("::", "-").gsub(",", "__")}.json"
     
     config_data["recipes"] = config_data["recipes"].select{|x| recipes.include?(x)}
     config_data["scalarium_custom_cookbooks"]["recipes"] = config_data["scalarium_custom_cookbooks"]["recipes"].select{|x| recipes.include?(x)}
@@ -80,20 +80,27 @@ elsif ARGV[0] == "exec"
     system(command)
     puts "\n\n\n\n\n************************************** finished executing command:\n\t#{command}\n\n"
   end
+elsif ARGV[0] == "context"
+  contexts = []
+  Dir.glob("#{CONTEXT_DIR}/*.json").each do |file|
+    contexts << JSON.load(File.read(file))["scalarium"]["activity"]
+  end
+  puts "The following contexts are available:"
+  puts "\t#{contexts.uniq.join("\n\t")}"
 else 
   puts <<EOF
 
 Usage: #{EXE} command
   
   commands:
-    show            show current configuration
-    list            list the chef recipes of the current config
-    update          update custom cookbooks (only public git repos are supported)
-    tail            tail current log (uses "less")
-    exec            execute all recipes of the current role
-    exec <recipes>  only execute the specified recipes (separate by comma without blanks)  
-
-
+    show              show current configuration
+    context           show available contexts
+    context <context> switch to context <context>
+    list              list the chef recipes of the current config
+    update            update custom cookbooks (only public git repos are supported)
+    tail              tail current log (uses "less")
+    exec              execute all recipes of the current role
+    exec <recipes>    only execute the specified recipes (separate by comma without blanks)  
 
 EOF
 end
