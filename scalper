@@ -59,9 +59,9 @@ elsif ARGV[0] == "uc"
     puts "only git repositories are supported at the moment"
     exit 3
   end
-  if  config_data["scalarium_custom_cookbooks"]["scm"]["ssh_key"].empty? ||
-      config_data["scalarium_custom_cookbooks"]["scm"]["username"].empty? ||
-      config_data["scalarium_custom_cookbooks"]["scm"]["password"].empty?
+  if  not config_data["scalarium_custom_cookbooks"]["scm"]["ssh_key"].empty? ||
+      not config_data["scalarium_custom_cookbooks"]["scm"]["username"].empty? ||
+      not config_data["scalarium_custom_cookbooks"]["scm"]["password"].empty?
     puts "only public repos are supported at the moment"
     exit 4
   end
