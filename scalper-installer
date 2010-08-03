@@ -13,6 +13,6 @@ then
 fi
 
 curl http://github.com/moviepilot/scalper/raw/master/scalper > $EXE 2>/dev/null
-chmod 755 $EXE
+chmod 755 $EXE 
 
 $EXE help
