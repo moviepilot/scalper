@@ -25,7 +25,7 @@ if ARGV.size == 0 || ARGV[0] == "help"
 Usage: #{EXE} command
   
   commands:
-    rc              show current configuration
+    sc              show current configuration
     rl              list the chef recipes of the current config
     exec            execute all recipes of the current role
     exec <recipes>  only execute the specified recipes (separate by comma without blanks)  
@@ -34,7 +34,7 @@ Usage: #{EXE} command
 
 EOF
 
-elsif ARGV[0] == "rc"
+elsif ARGV[0] == "sc"
   pp config_data
 elsif ARGV[0] == "rl"
   puts "recipes:"
