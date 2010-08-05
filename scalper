@@ -20,14 +20,23 @@ TMP_UPDATE_CONTEXTS_PATH="/tmp/scalper-tmp-site-cookbooks"
 CHEF_EXECUTABLE="/root/scalarium-agent/bin/chef-solo -c /root/scalarium-agent/config/solo.rb -j" 
 SITE_COOKBOOKS_DIR="/root/scalarium-agent/site-cookbooks"
 SCALARIUM_COOKBOOKS_DIR="/root/scalarium-agent/cookbooks"
-ALL_SCALARIUM_RECIPES=`cd #{SCALARIUM_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$" | sed 's/\/recipes\//::/g' | sed 's/\.rb$//g'`.split("\n")
-ALL_SITE_RECIPES=`cd #{SITE_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$" | sed 's/\/recipes\//::/g' | sed 's/\.rb$//g'`.split("\n")
+ALL_SCALARIUM_RECIPES=`cd #{SCALARIUM_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$"`.gsub(/\/recipes\//, '::').gsub(/\.rb$/,'').split("\n")
+ALL_SITE_RECIPES=`cd #{SITE_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$"`.gsub(/\/recipes\//, '::').gsub(/\.rb$/,'').split("\n")
 
 config_data = JSON.load(File.read(CURRENT_CONTEXT))
 
 
 if ARGV[0] == "show"
   pp config_data
+elsif ARGV[0] == "list" && ARGV[1] == "all"
+  puts "\n\nall scalarium recipes:"
+  puts 
+  puts "\t#{ALL_SCALARIUM_RECIPES.join("\n\t")}"
+  puts "\n\nall site recipes:"
+  puts 
+  puts "\t#{ALL_SITE_RECIPES.join("\n\t")}"
+  
+
 elsif ARGV[0] == "list"
 
   puts "current context's recipes:"
@@ -38,13 +47,7 @@ elsif ARGV[0] == "list"
   puts "current context's custom recipes:"
   puts 
   puts "\t#{config_data["scalarium_custom_cookbooks"]["recipes"] ? config_data["scalarium_custom_cookbooks"]["recipes"].join("\n\t") : "\tnone"}"
-  puts "\n\nall scalarium recipes:"
-  puts 
-  puts "\t#{ALL_SCALARIUM_RECIPES.join("\n\t")}"
-  puts "\n\nall site recipes:"
-  puts 
-  puts "\t#{ALL_SITE_RECIPES.join("\n\t")}"
-  
+
 
 elsif ARGV[0] == "update"
   custom_cookbooks_url = config_data["scalarium_custom_cookbooks"]["scm"]["repository"]
@@ -134,6 +137,7 @@ Usage: #{EXE} command
     context           show available contexts
     context <context> switch to context <context>
     list              list the chef recipes of the current config
+    list all          list all chef recipes available
     update            update custom cookbooks (only public git repos are supported)
     tail              tail current log (uses "less")
     exec              execute all recipes of the current role
