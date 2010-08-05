@@ -20,8 +20,8 @@ TMP_UPDATE_CONTEXTS_PATH="/tmp/scalper-tmp-site-cookbooks"
 CHEF_EXECUTABLE="/root/scalarium-agent/bin/chef-solo -c /root/scalarium-agent/config/solo.rb -j" 
 SITE_COOKBOOKS_DIR="/root/scalarium-agent/site-cookbooks"
 SCALARIUM_COOKBOOKS_DIR="/root/scalarium-agent/cookbooks"
-ALL_SCALARIUM_RECIPES=`cd #{SCALARIUM_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$" | sed 's/\/recipes\//::/g' | sed 's/\.rb$//g'`
-ALL_SITE_RECIPES=`cd #{SITE_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$" | sed 's/\/recipes\//::/g' | sed 's/\.rb$//g'`
+ALL_SCALARIUM_RECIPES=`cd #{SCALARIUM_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$" | sed 's/\/recipes\//::/g' | sed 's/\.rb$//g'`.split("\n")
+ALL_SITE_RECIPES=`cd #{SITE_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$" | sed 's/\/recipes\//::/g' | sed 's/\.rb$//g'`.split("\n")
 
 config_data = JSON.load(File.read(CURRENT_CONTEXT))
 
