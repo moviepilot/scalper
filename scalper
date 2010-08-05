@@ -66,8 +66,9 @@ elsif ARGV[0] == "exec"
     config_data["scalarium_custom_cookbooks"]["recipes"] = config_data["scalarium_custom_cookbooks"]["recipes"].select{|x| recipes.include?(x)}
 
     if not config_data["scalarium_custom_cookbooks"].empty?
-      config_data["recipes"] << "scalarium_custom_cookbooks::load"
+      config_data["recipes"].unshift("scalarium_custom_cookbooks::load") 
       config_data["recipes"] << "scalarium_custom_cookbooks::execute"
+      config_data["recipes"].uniq!
     end
 
     f = File.open(tmp_recipe, "w")
