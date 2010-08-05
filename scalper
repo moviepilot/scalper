@@ -77,7 +77,10 @@ elsif ARGV[0] == "exec"
     tmp_recipe = "#{TMP_CONTEXT_PATH}/chef_config__#{ARGV[1].gsub("::", "-").gsub(",", "__")}.json"
     
     config_data["recipes"] = config_data["recipes"].select{|x| recipes.include?(x)}
+    config_data["recipes"] << ALL_SCALARIUM_RECIPES.select{|x| recipes.include?(x)}
     config_data["scalarium_custom_cookbooks"]["recipes"] = config_data["scalarium_custom_cookbooks"]["recipes"].select{|x| recipes.include?(x)}
+    config_data["scalarium_custom_cookbooks"]["recipes"] << ALL_SITE_RECIPES.select{|x| recipes.include?(x)}
+
 
     if not config_data["scalarium_custom_cookbooks"].empty?
       config_data["recipes"].unshift("scalarium_custom_cookbooks::load") 
