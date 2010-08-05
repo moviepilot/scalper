@@ -31,7 +31,7 @@ if ARGV[0] == "show"
   pp config_data
 elsif ARGV[0] == "info"
   puts "Most important paths ... type:"
-  puts "\tcd %-70s# to change to the %s" % [CURRENT_LOG, "chef log dir"]
+  puts "\tcd %-70s# to change to the %s" % [CHEF_LOG_DIR, "chef log dir"]
   puts "\tcd %-70s# to change to the %s" % [SITE_COOKBOOKS_DIR, "custom chef recipes dir"]
   puts "\tcd %-70s# to change to the %s" % [SCALARIUM_COOKBOOKS_DIR, "scalarium recipes dir"]
 
