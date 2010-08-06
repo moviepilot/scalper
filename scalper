@@ -34,8 +34,10 @@ elsif ARGV[0] == "info"
   puts "\tcd %-40s# to change to the %s" % [CHEF_LOG_DIR, "chef log dir"]
   puts "\tcd %-40s# to change to the %s" % [SITE_COOKBOOKS_DIR, "custom chef recipes dir"]
   puts "\tcd %-40s# to change to the %s" % [SCALARIUM_COOKBOOKS_DIR, "scalarium recipes dir"]
-  config_data["deploy"].map{|x| x["deploy_to"]}.compact.each do |path|
-    puts "\tcd %-40s# to change to the %s" % [path, "an app :)"]
+
+  config_data["deploy"].each |application, stuff|
+    next unless stuff["deploy_to"]
+    puts "\tcd %-40s# to change to the %s" % [stuff["deploy_to"], application]
   end
 
 
