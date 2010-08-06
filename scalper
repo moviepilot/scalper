@@ -35,7 +35,7 @@ elsif ARGV[0] == "info"
   puts "\tcd %-40s# to change to the %s" % [SITE_COOKBOOKS_DIR, "custom chef recipes dir"]
   puts "\tcd %-40s# to change to the %s" % [SCALARIUM_COOKBOOKS_DIR, "scalarium recipes dir"]
 
-  config_data["deploy"].each |application, stuff|
+  config_data["deploy"].each do |application, stuff|
     next unless stuff["deploy_to"]
     puts "\tcd %-40s# to change to the %s" % [stuff["deploy_to"], application]
   end
