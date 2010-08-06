@@ -61,7 +61,7 @@ elsif ARGV[0] == "list"
 
 
 elsif ARGV[0] == "update" && ARGV[1] == "self"
-  command("bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)")
+  return system("bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)")
 elsif ARGV[0] == "update"
   custom_cookbooks_url = config_data["scalarium_custom_cookbooks"]["scm"]["repository"]
   if !custom_cookbooks_url
