@@ -40,7 +40,7 @@ elsif ARGV[0] == "info"
     puts "\tcd %-40s# to change to the %s app" % ["#{stuff["deploy_to"]}/current", application]
   end
 
-  puts "\tvim %-39s# to see the cluster state %s" % [SCALARIUM_COOKBOOKS_DIR]
+  puts "\tvim %-39s# to see the cluster state" % [SCALARIUM_COOKBOOKS_DIR]
 
 elsif ARGV[0] == "list" && ARGV[1] == "all"
   puts "\n\nall scalarium recipes:"
