@@ -34,6 +34,10 @@ elsif ARGV[0] == "info"
   puts "\tcd %-40s# to change to the %s" % [CHEF_LOG_DIR, "chef log dir"]
   puts "\tcd %-40s# to change to the %s" % [SITE_COOKBOOKS_DIR, "custom chef recipes dir"]
   puts "\tcd %-40s# to change to the %s" % [SCALARIUM_COOKBOOKS_DIR, "scalarium recipes dir"]
+  if config_data["deploy"].map{|x| x["deploy_to"]}.compact.each do |path|
+    puts "\tcd %-40s# to change to the %s" % [path, "an app :)"]
+  end
+
 
 elsif ARGV[0] == "list" && ARGV[1] == "all"
   puts "\n\nall scalarium recipes:"
@@ -56,6 +60,8 @@ elsif ARGV[0] == "list"
   puts "\t#{config_data["scalarium_custom_cookbooks"]["recipes"] ? config_data["scalarium_custom_cookbooks"]["recipes"].join("\n\t") : "\tnone"}"
 
 
+elsif ARGV[0] == "update" && ARGV[1] == "self"
+  command("bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)")
 elsif ARGV[0] == "update"
   custom_cookbooks_url = config_data["scalarium_custom_cookbooks"]["scm"]["repository"]
   if !custom_cookbooks_url
@@ -149,6 +155,7 @@ Usage: #{EXE} command
     list              list the chef recipes of the current config
     list all          list all chef recipes available
     update            update custom cookbooks (only public git repos are supported)
+    update self       update scalper
     tail              tail current log (uses "less")
     exec              execute all recipes of the current role
     exec <recipes>    only execute the specified recipes (separate by comma without blanks)  
