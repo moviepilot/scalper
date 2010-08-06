@@ -36,7 +36,7 @@ elsif ARGV[0] == "info"
   puts "\tcd %-40s# to change to the %s" % [SCALARIUM_COOKBOOKS_DIR, "scalarium recipes dir"]
 
   config_data["deploy"].each do |application, stuff|
-    next unless stuff["deploy_to"]
+    next unless stuff["deploy_to"] || !File.exists?(stuff["deploy_to"])
     puts "\tcd %-40s# to change to the %s app" % ["#{stuff["deploy_to"]}/current", application]
   end
 
