@@ -37,7 +37,7 @@ elsif ARGV[0] == "info"
 
   config_data["deploy"].each do |application, stuff|
     next unless stuff["deploy_to"]
-    puts "\tcd %-40s# to change to the %s" % [stuff["deploy_to"], application]
+    puts "\tcd %-40s# to change to the %s app" % [stuff["deploy_to"], application]
   end
 
 
