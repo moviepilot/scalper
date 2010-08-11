@@ -1,3 +1,17 @@
 install (as root) in any running scalarium instance with:
 
     bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)
+
+Scalper provides some utility functions that make your life with scalarium a little bit easier:
+
+scalper show              # show current json configuration
+scalper context           # show available contexts (context == scalarium action)
+scalper context <context> # switch to context <context>
+scalper list              # list the chef recipes of the current context
+scalper list all          # list all chef recipes available
+scalper update            # update custom cookbooks (only public git repos are supported)
+scalper update self       # update scalper
+scalper tail              # tail log of the currently running process (uses "less")
+scalper exec              # execute all recipes of the current context
+scalper exec <recipes>    # only execute the specified recipes (separate by comma without blanks)  
+scalper info              # output the most important paths

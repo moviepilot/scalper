@@ -152,18 +152,19 @@ else
 
 Usage: #{EXE} command
   
-  commands:
-    show              show current configuration
-    context           show available contexts
-    context <context> switch to context <context>
-    list              list the chef recipes of the current config
-    list all          list all chef recipes available
-    update            update custom cookbooks (only public git repos are supported)
-    update self       update scalper
-    tail              tail current log (uses "less")
-    exec              execute all recipes of the current role
-    exec <recipes>    only execute the specified recipes (separate by comma without blanks)  
-    info              output the most important paths
+commands:
+  
+#{EXE} show              # show current json configuration
+#{EXE} context           # show available contexts (context == scalarium action (setup, configure, deploy, etc.)
+#{EXE} context <context> # switch to context <context>
+#{EXE} list              # list the chef recipes of the current context
+#{EXE} list all          # list all chef recipes available
+#{EXE} update            # update custom cookbooks (only public git repos are supported)
+#{EXE} update self       # update scalper
+#{EXE} tail              # tail log of the currently running process (uses "less")
+#{EXE} exec              # execute all recipes of the current context
+#{EXE} exec <recipes>    # only execute the specified recipes (separate by comma without blanks)  
+#{EXE} info              # output the most important paths
 
 EOF
 end
