@@ -22,6 +22,6 @@
 // All your GM code must be inside this function
     function letsJQuery() {
 
-      jQuery('[data-ip]').append("<a href='#' onclick='location.href=\"ssh://ubuntu@\" + $(this).parent().attr(\"data-ip\")'>open externally</a>")
+      jQuery('[data-ip]').append("<a title='open in external program' href='#' onclick='location.href=\"ssh://ubuntu@\" + $(this).parent().attr(\"data-ip\")'><img src='https://manage.scalarium.com/images/icons/ssh.png'></a>")
     }
 
