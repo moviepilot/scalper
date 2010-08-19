@@ -1,0 +1,25 @@
+#!/bin/bash
+# A script to point your browser to when a link of the form ssh://<user>@<server> is to be opened
+# opens a new tab in gnome-terminal with the ssh command fill in
+#
+# install these dependencies:
+# - xdotool
+# - wmctrl
+#
+
+SSH_SERVER=$(echo $1 | sed 's/^ssh:\/\///g')
+
+pgrep -u "$USER" gnome-terminal | grep -qv "$$"
+if [ "$?" == "0" ]; then
+  WID=`xdotool search --class "gnome-terminal" | head -1`
+  xdotool windowfocus $WID
+  xdotool key ctrl+shift+t
+  wmctrl -i -a $WID
+  sleep 1
+  xdotool type "ssh ${SSH_SERVER}"
+  xdotool key ctrl+j
+else
+  /usr/bin/gnome-terminal
+  xdotool type "ssh ${SSH_SERVER}"
+  xdotool key ctrl+j
+fi
