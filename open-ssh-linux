@@ -2,10 +2,10 @@
 # A script to point your browser to when a link of the form ssh://<user>@<server> is to be opened
 # opens a new tab in gnome-terminal with the ssh command fill in
 #
-# install these dependencies:
 # - xdotool
 # - wmctrl
 #
+
 
 SSH_SERVER=$(echo $1 | sed 's/^ssh:\/\///g')
 
