@@ -1,7 +1,3 @@
-install (as root) in any running scalarium instance with:
-
-    bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)
-
 Scalper provides some utility functions that make your life with scalarium a little bit easier:
 
 scalper show              # show current json configuration
@@ -16,8 +12,14 @@ scalper exec              # execute all recipes of the current context
 scalper exec <recipes>    # only execute the specified recipes (separate by comma without blanks)  
 scalper info              # output the most important paths
 
-----------
 
-in order to install the grease monkey script, click on this tiny little helpful link:
+install (as root) in any running scalarium instance with:
+
+    bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)
+
+=================================================================================================
+
+Furthermore, a grease monkey script to open ssh sessions of the type ssh://ubuntu@<server>
+In order to install the grease monkey script, click on this tiny little helpful link:
 
 http://github.com/moviepilot/scalper/raw/master/scalarium-ssh-opener.user.js
