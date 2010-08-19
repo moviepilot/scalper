@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           scalarium-ssh-opener 
 // @namespace      scalarium
-// @description    adds an ssh://ubuntu@<server> to your instances
-// @include        http://*.scalarium.com/*
+// @description    adds an ssh://ubuntu@<server> link next to the java console link
+// @include        https://*.scalarium.com/*
 // ==/UserScript==
 
 
@@ -23,6 +23,6 @@
     function letsJQuery() {
       jQuery.noConflict();
 
-      $('[data-ip]').append("<a href='#' onclick='location.href=\"ssh://ubuntu@\" + $(this).parent().attr(\"data-ip\")'>open externally</a>")
+      jQuery('[data-ip]').append("<a href='#' onclick='location.href=\"ssh://ubuntu@\" + $(this).parent().attr(\"data-ip\")'>open externally</a>")
     }
 
