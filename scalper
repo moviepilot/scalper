@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # uuuhm ... this is a hackish, bash-like helper script -- please close eyes instantly when opening this file
 
-if `whoami` != "root"
+if `whoami`.strip != "root"
   puts "execute as root!"
   exit 2
 end
