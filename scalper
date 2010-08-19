@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 # uuuhm ... this is a hackish, bash-like helper script -- please close eyes instantly when opening this file
+
+if `whoami` != "root"
+  puts "execute as root!"
+  exit 2
+end
+
 EXE=`basename #{__FILE__}`.strip
 if !system("which #{EXE} 2>/dev/null >/dev/null")
   puts "#{EXE} is not in your PATH available ... add it with:\n\texport PATH=$PATH:#{`readlink -f $(dirname #{__FILE__})`}\n"
