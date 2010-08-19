@@ -21,7 +21,6 @@
 
 // All your GM code must be inside this function
     function letsJQuery() {
-      jQuery.noConflict();
 
       jQuery('[data-ip]').append("<a href='#' onclick='location.href=\"ssh://ubuntu@\" + $(this).parent().attr(\"data-ip\")'>open externally</a>")
     }
