@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           scalarium-ssh-opener 
 // @namespace      scalarium
-// @description    adds an ssh://ubuntu@<server> link next to the java console link. On linux with gnome use the script 'open-ssh-linux'; for this,  you need to install these dependencies: xdotool & wmctrl
+// @description    adds an ssh://ubuntu@<server> link next to the ip link (the link has the console icon). On linux with gnome use the script 'open-ssh-linux'; for this,  you need to install these dependencies: xdotool & wmctrl
 // @include        https://*.scalarium.com/*
 // ==/UserScript==
 
