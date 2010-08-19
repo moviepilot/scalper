@@ -15,3 +15,9 @@ scalper tail              # tail log of the currently running process (uses "les
 scalper exec              # execute all recipes of the current context
 scalper exec <recipes>    # only execute the specified recipes (separate by comma without blanks)  
 scalper info              # output the most important paths
+
+----------
+
+in order to install the grease monkey script, click on this tiny little helpful link:
+
+http://github.com/moviepilot/scalper/raw/master/scalarium-ssh-opener.user.js
