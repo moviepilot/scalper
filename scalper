@@ -20,7 +20,7 @@ CONTEXT_DIR="/root/scalarium-agent/log/chef/"
 #CONTEXT_DIR="/tmp"
 
 USED_CONTEXT_FILE="#{CONTEXT_DIR}/.scalper_context"
-CURRENT_CONTEXT=File.exists?(USED_CONTEXT_FILE) ? File.read(USED_CONTEXT_FILE) : `ls -1 #{CONTEXT_DIR}/*.json | tail -n 1`.strip
+CURRENT_CONTEXT=File.exists?(USED_CONTEXT_FILE) && File.exists?( File.read(USED_CONTEXT_FILE) ) ? File.read(USED_CONTEXT_FILE) : `ls -1 #{CONTEXT_DIR}/*.json | tail -n 1`.strip
 CHEF_LOG_DIR="/root/scalarium-agent/log/chef/"
 CURRENT_LOG=File.exists?(USED_CONTEXT_FILE) ? File.read(USED_CONTEXT_FILE).gsub(/json/,'log') : `ls -1 #{CHEF_LOG_DIR}/*.log 2>/dev/null | tail -n 1`.strip
 TMP_CONTEXT_PATH="/tmp"
