@@ -30,12 +30,17 @@ SITE_COOKBOOKS_DIR="/root/scalarium-agent/site-cookbooks"
 SCALARIUM_COOKBOOKS_DIR="/root/scalarium-agent/cookbooks"
 ALL_SCALARIUM_RECIPES=`cd #{SCALARIUM_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$"`.gsub(/\/recipes\//, '::').gsub(/\.rb$/,'').split("\n")
 ALL_SITE_RECIPES=`cd #{SITE_COOKBOOKS_DIR};  find  */recipes | grep -v default.rb | grep "\.rb$"`.gsub(/\/recipes\//, '::').gsub(/\.rb$/,'').split("\n")
+CLUSTER_STATE_FILE="/var/lib/scalarium/cluster_state.json"
 
 config_data = JSON.load(File.read(CURRENT_CONTEXT))
 
 
 if ARGV[0] == "show"
   pp config_data
+elsif ARGV[0] == "cluster"
+  puts "\n\n\n"
+  pp JSON.load( File.read(CLUSTER_STATE_FILE) )
+  puts "\n\n\n"
 elsif ARGV[0] == "info"
   puts "Most important paths ... type:"
   puts "\tcd %-40s# to change to the %s" % [CHEF_LOG_DIR, "chef log dir"]
@@ -46,8 +51,6 @@ elsif ARGV[0] == "info"
     next unless stuff["deploy_to"] || !File.exists?(stuff["deploy_to"])
     puts "\tcd %-40s# to change to the %s app" % ["#{stuff["deploy_to"]}/current", application]
   end
-
-  puts "\tvim %-39s# to see the cluster state" % ["/var/lib/scalarium/cluster_state.json"]
 
 elsif ARGV[0] == "list" && ARGV[1] == "all"
   puts "\n\nall scalarium recipes:"
@@ -162,6 +165,7 @@ Usage: #{EXE} command
 commands:
   
 #{EXE} show              # show current json configuration
+#{EXE} cluster           # show current cluster state
 #{EXE} context           # show available contexts (context == scalarium action (setup, configure, deploy, etc.)
 #{EXE} context <context> # switch to context <context>
 #{EXE} list              # list the chef recipes of the current context
