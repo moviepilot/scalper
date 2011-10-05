@@ -15,7 +15,7 @@ scalper info              # output the most important paths
 
 install (as root) in any running scalarium instance with:
 
-    bash < <(curl http://github.com/moviepilot/scalper/raw/master/scalper-installer)
+    bash < <(curl -L http://github.com/moviepilot/scalper/raw/master/scalper-installer)
 
 =================================================================================================
 
